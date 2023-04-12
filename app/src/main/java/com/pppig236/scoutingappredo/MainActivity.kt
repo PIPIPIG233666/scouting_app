@@ -11,13 +11,11 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
     private val permissionsRequestCode = 123
     private lateinit var managePermissions: ManagePermissions
 
-    private lateinit var tableRecyclerView: RecyclerView
     private var userList = ArrayList<User>()
     private lateinit var csvOperations: CSVOperations
     private lateinit var constants: Constants
@@ -44,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         buttonScanner.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit()
             showHide(buttonScanner)
-            showHide(tableRecyclerView)
             showHide(tableView)
             if (csvOperations.teamDataList.size / 3 != 0)
                 buttonDelete.visibility = View.VISIBLE
@@ -54,7 +51,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().remove(fragment)
                 .commitAllowingStateLoss()
             showHide(buttonScanner)
-            showHide(tableRecyclerView)
             showHide(tableView)
             userList.clear() // make sure there are no duplicates
             if (csvOperations.teamDataList.size / 3 != 0)
@@ -142,7 +138,6 @@ class MainActivity : AppCompatActivity() {
     private fun createCsv() {
         constants = Constants()
         csvOperations = CSVOperations()
-        tableRecyclerView = findViewById(R.id.table_recycler_view)
 
         val createdFile = constants.fileClass.exists()
 
