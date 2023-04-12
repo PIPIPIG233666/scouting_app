@@ -30,14 +30,19 @@ class ScannerFragment : Fragment() {
         codeScanner = CodeScanner(activity, scannerView)
         csvOperations = CSVOperations()
         constants = Constants()
+
+        var last = ""
         codeScanner.decodeCallback = DecodeCallback {
             activity.runOnUiThread {
-                Toast.makeText(activity, it.text, Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, it.text, Toast.LENGTH_SHORT).show()
                 val createdFile = constants.fileClass.exists()
                 if (!createdFile) {
                     csvOperations.createCsv(constants.file)
                 }
-                csvOperations.appendCsv(constants.file, "\n" + it.text)
+                if (last != it.text) {
+                    csvOperations.appendCsv(constants.file, "\n" + it.text)
+                    last = it.text
+                }
             }
         }
         scannerView.setOnClickListener {

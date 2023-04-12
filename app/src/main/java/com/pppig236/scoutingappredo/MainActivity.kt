@@ -9,14 +9,12 @@ import android.os.Environment
 import android.provider.Settings
 import android.view.View
 import android.widget.Button
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     private val permissionsRequestCode = 123
     private lateinit var managePermissions: ManagePermissions
 
-    private var userList = ArrayList<User>()
     private lateinit var csvOperations: CSVOperations
     private lateinit var constants: Constants
 
@@ -29,51 +27,11 @@ class MainActivity : AppCompatActivity() {
         createCsv()
 
         val buttonScanner = findViewById<Button>(R.id.scanner_view)
-        val tableView = findViewById<Button>(R.id.table_view)
         val fragment = ScannerFragment()
-        val buttonDelete = findViewById<Button>(R.id.delete)
-
-        showHide(buttonDelete)
-        showHide(tableView)
-
-        if (csvOperations.teamDataList.size / 3 != 0)
-            buttonDelete.visibility = View.VISIBLE
 
         buttonScanner.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit()
             showHide(buttonScanner)
-            showHide(tableView)
-            if (csvOperations.teamDataList.size / 3 != 0)
-                buttonDelete.visibility = View.VISIBLE
-        }
-
-        tableView.setOnClickListener {
-            supportFragmentManager.beginTransaction().remove(fragment)
-                .commitAllowingStateLoss()
-            showHide(buttonScanner)
-            showHide(tableView)
-            userList.clear() // make sure there are no duplicates
-            if (csvOperations.teamDataList.size / 3 != 0)
-                buttonDelete.visibility = View.VISIBLE
-        }
-
-        buttonDelete.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
-            builder.setMessage("Deleting data is permanent\nAre you sure?")
-            builder.setPositiveButton("Yes") { _, _ ->
-                // handle yes click
-                // perform action if user selects "Yes"
-                csvOperations.deleteCsv(constants.file)
-                createCsv()
-                userList.clear() // make sure there are no leftovers
-                showHide(buttonDelete)
-            }
-            builder.setNegativeButton("No") { _, _ ->
-                // handle no click
-                // perform action if user selects "No"
-            }
-            val dialog = builder.create()
-            dialog.show()
         }
     }
 
@@ -86,7 +44,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPermissions() {
-
         // Initialize a list of required permissions to request runtime
         val list = listOf(
             Manifest.permission.CAMERA,
@@ -107,31 +64,6 @@ class MainActivity : AppCompatActivity() {
             val uri: Uri = Uri.fromParts("package", this.packageName, null)
             intent.data = uri
             startActivity(intent)
-        }
-    }
-
-    private fun readCsvToList() {
-        constants = Constants()
-        csvOperations = CSVOperations()
-        csvOperations.readCsv(constants.file)
-        // add a while loop
-        var i = 0
-        var cnt = 0
-        val lim = csvOperations.teamDataList.size / 3
-
-        if (lim != 0) {
-            do {
-                userList.add(
-                    User(
-                        // Update this
-                        csvOperations.teamDataList[i],
-                        csvOperations.teamDataList[i + 1],
-                        csvOperations.teamDataList[i + 2],
-                    )
-                )
-                i += 3
-                cnt++
-            } while (cnt < lim)
         }
     }
 
