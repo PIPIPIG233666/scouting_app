@@ -9,10 +9,8 @@ import android.os.Environment
 import android.provider.Settings
 import android.view.View
 import android.widget.Button
-import android.widget.TableRow
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var tableRecyclerView: RecyclerView
     private var userList = ArrayList<User>()
-    private lateinit var tableRowAdapter: TableRowAdapter
     private lateinit var csvOperations: CSVOperations
     private lateinit var constants: Constants
 
@@ -36,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         val buttonScanner = findViewById<Button>(R.id.scanner_view)
         val tableView = findViewById<Button>(R.id.table_view)
         val fragment = ScannerFragment()
-        val headerLayout = findViewById<TableRow>(R.id.table_heading_layout)
         val buttonDelete = findViewById<Button>(R.id.delete)
 
         showHide(buttonDelete)
@@ -48,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         buttonScanner.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit()
             showHide(buttonScanner)
-            showHide(headerLayout)
             showHide(tableRecyclerView)
             showHide(tableView)
             if (csvOperations.teamDataList.size / 3 != 0)
@@ -59,11 +54,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().remove(fragment)
                 .commitAllowingStateLoss()
             showHide(buttonScanner)
-            showHide(headerLayout)
             showHide(tableRecyclerView)
             showHide(tableView)
             userList.clear() // make sure there are no duplicates
-            updateTable()
             if (csvOperations.teamDataList.size / 3 != 0)
                 buttonDelete.visibility = View.VISIBLE
         }
@@ -77,7 +70,6 @@ class MainActivity : AppCompatActivity() {
                 csvOperations.deleteCsv(constants.file)
                 createCsv()
                 userList.clear() // make sure there are no leftovers
-                updateTable()
                 showHide(buttonDelete)
             }
             builder.setNegativeButton("No") { _, _ ->
@@ -122,14 +114,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateTable() {
-        readCsvToList()
-        tableRowAdapter = TableRowAdapter(userList)
-
-        tableRecyclerView.layoutManager = LinearLayoutManager(this)
-        tableRecyclerView.adapter = tableRowAdapter
-    }
-
     private fun readCsvToList() {
         constants = Constants()
         csvOperations = CSVOperations()
@@ -164,9 +148,7 @@ class MainActivity : AppCompatActivity() {
 
         // read the csv from the saved file
         // and add it to the userList
-        if (createdFile) {
-            updateTable()
-        } else {
+        if (!createdFile) {
             csvOperations.createCsv(constants.file)
         }
     }

@@ -23,7 +23,7 @@
 
         <Button
             android:id="@+id/table_view"
-            android:layout_width="251dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_43sdp"
             android:text="@string/table_view"
@@ -31,25 +31,29 @@
 
         <Button
             android:id="@+id/delete"
-            android:layout_width="120dp"
-            android:layout_height="71dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/_45sdp"
             android:text="@string/delete"
             android:translationY="@dimen/_450sdp" />
 
         <ImageView
             android:id="@+id/image_view"
-            android:layout_width="500dp"
-            android:layout_height="24dp"
-            android:src="@drawable/frc_logo"
-            android:contentDescription="@string/first_logo" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:contentDescription="@string/first_logo"
+            android:src="@drawable/frc_logo" />
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="572dp"
-            android:layout_height="24dp"
-            android:src="@drawable/icon"
-            android:contentDescription="@string/_573_logo_2023" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:contentDescription="@string/_573_logo_2023"
+            android:src="@drawable/icon" />
     </FrameLayout>
 
     <TableRow
@@ -60,6 +64,7 @@
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_4sdp"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -118,8 +123,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/table_recycler_view"
-        android:layout_width="351dp"
-        android:layout_height="406dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/table_heading_layout">
