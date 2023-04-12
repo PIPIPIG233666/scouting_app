@@ -2,6 +2,7 @@ package com.pppig236.scoutingappredo
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -27,11 +28,29 @@ class MainActivity : AppCompatActivity() {
         createCsv()
 
         val buttonScanner = findViewById<Button>(R.id.scanner_view)
+        val buttonHome = findViewById<Button>(R.id.home_view)
         val fragment = ScannerFragment()
 
         buttonScanner.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit()
             showHide(buttonScanner)
+            showHide(buttonHome)
+        }
+        buttonHome.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            csvOperations.readCsv(constants.file)
+            if (csvOperations.teamDataList.size % 6 == 0){
+
+                builder.setMessage("All six teams' results from match#" + csvOperations.teamDataList.size/6/2+" are collected, tap again to continue")
+
+                    supportFragmentManager.beginTransaction().remove(fragment)
+                        .commitAllowingStateLoss()
+                    csvOperations.teamDataList.clear()
+                    showHide(buttonHome)
+                    showHide(buttonScanner)
+                val dialog = builder.create()
+                dialog.show()
+            }
         }
     }
 

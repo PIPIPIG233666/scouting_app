@@ -20,6 +20,15 @@
             android:text="@string/scanner_fragment"
             android:translationY="@dimen/_400sdp" />
 
+        <Button
+            android:id="@+id/home_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_43sdp"
+            android:text="@string/home"
+            android:visibility="gone"
+            android:translationY="@dimen/_400sdp" />
+
         <ImageView
             android:id="@+id/image_view"
             android:layout_width="match_parent"
