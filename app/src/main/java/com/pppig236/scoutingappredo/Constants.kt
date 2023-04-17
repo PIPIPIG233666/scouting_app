@@ -6,4 +6,6 @@ import java.io.File
 class Constants {
     val file = Environment.getExternalStorageDirectory().path + "/data.csv"
     val fileClass = File(file)
+
+    var matchCnt = 0
 }

@@ -12,7 +12,7 @@ class CSVOperations {
 
         // create a new file with headers
         // Update this
-        file.writeText("Match Number,Alliance,Team Number,Starting Location,Auto High Cone,Auto Mid Cone,Auto Low Cone,Auto High Cube,Auto Mid Cube,Auto Low Cube,Auto Charge Station,Mobility,Tele High Cone,Tele Mid Cone,Tele Low Cone,Tele High Cube,Tele Mid Cube,Tele Low Cube,Links,Tele Charge Station,Penalties,Robot Breakdown,Defense,Comment")
+        file.writeText("Match Number,Alliance,Team Number,Starting Location,Auto High Cone,Auto Mid Cone,Auto Low Cone,Auto High Cube,Auto Mid Cube,Auto Low Cube,Auto Charge Station,Mobility,Tele High Cone,Tele Mid Cone,Tele Low Cone,Tele High Cube,Tele Mid Cube,Tele Low Cube,Links,Tele Charge Station,Penalties,Robot Breakdown,Robot Tipped,Defense,Comment")
     }
 
     fun appendCsv(fileName: String, text: String) {
@@ -29,13 +29,6 @@ class CSVOperations {
                 column["Match Number"]?.let { teamDataList.add(it) }
                 column["Team Number"]?.let { teamDataList.add(it) }
             }
-        }
-    }
-
-    fun deleteCsv(fileName: String) {
-        val file = File(fileName)
-        if (file.exists()) {
-            file.delete()
         }
     }
 }
