@@ -47,13 +47,15 @@ class MainActivity : AppCompatActivity() {
         }
         buttonHome.setOnClickListener {
             val builder = AlertDialog.Builder(this)
+            val msg: String
 
             csvOperations.readCsv(constants.file)
             // data list size is 2*6*(matchCnt+1)
             if (csvOperations.teamDataList.size > 0) {
                 if (csvOperations.teamDataList.size % 6 == 0 && (csvOperations.teamDataList[0].toInt() + constants.matchCnt) == (csvOperations.teamDataList.size / 6 / 2)) {
 
-                    builder.setMessage("All six teams' results from match#" + constants.matchCnt + " are collected, tap again to continue")
+                    msg =
+                        "All six teams' results from match#" + (constants.matchCnt + 1) + " are collected, tap again to continue"
 
                     supportFragmentManager.beginTransaction().remove(fragment)
                         .commitAllowingStateLoss()
@@ -61,13 +63,15 @@ class MainActivity : AppCompatActivity() {
                     showHide(buttonScanner)
                     constants.matchCnt++
                 } else {
-                    builder.setMessage("not yet collected all six, please keep scanning for match# " + (constants.matchCnt + 1))
+                    msg =
+                        ("not yet collected all six, please keep scanning for match# " + (constants.matchCnt + 1))
                 }
                 csvOperations.teamDataList.clear()
 
             } else {
-                builder.setMessage("empty data, please start scanning :)")
+                msg = "empty data, please start scanning :)"
             }
+            builder.setMessage(msg)
             val dialog = builder.create()
             dialog.show()
         }

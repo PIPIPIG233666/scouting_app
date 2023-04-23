@@ -12,15 +12,16 @@
         android:layout_height="match_parent"
         app:autoFocusButtonColor="@android:color/holo_orange_dark"
         app:autoFocusButtonVisible="true"
+        app:autoFocusButtonPaddingHorizontal="200dp"
         app:flashButtonColor="@android:color/holo_orange_dark"
-        app:flashButtonVisible="true"
+        app:flashButtonVisible="false"
         app:frameAspectRatioHeight="1"
         app:frameAspectRatioWidth="1"
         app:frameColor="@android:color/holo_orange_dark"
         app:frameCornersRadius="0dp"
         app:frameCornersSize="50dp"
-        app:frameSize="0.75"
-        app:frameThickness="2dp"
+        app:frameSize="0.9"
+        app:frameThickness="5dp"
         app:maskColor="#77000000">
 
     </com.budiyev.android.codescanner.CodeScannerView>
