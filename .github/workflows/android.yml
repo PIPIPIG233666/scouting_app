@@ -1,15 +1,9 @@
 name: Android CI
 
-env:
-  # The name of the main module repository
-  main_project_module: app
-
 on:
-  # Triggers the workflow on push or pull request events but only for default and protected branches
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    tags:
+    - '*'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -18,7 +12,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v1
 
@@ -48,3 +43,9 @@ jobs:
         with:
           name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - APK(s) release generated
           path: ${{ env.main_project_module }}/build/outputs/apk/release/
+
+      # Upload to Release
+      - uses: actions/checkout@v3
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "${{ env.main_project_module }}/build/outputs/apk/release/*.apk"
