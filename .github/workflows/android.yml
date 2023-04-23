@@ -15,7 +15,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       # Set Current Date As Env Variable
       - name: Set current date as env variable
@@ -45,7 +45,7 @@ jobs:
           path: ${{ env.main_project_module }}/build/outputs/apk/release/
 
       # Upload to Release
-      - uses: actions/checkout@v3
+      - name: Upload APK Release - ${{ env.repository_name }}
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "${{ env.main_project_module }}/build/outputs/apk/release/*.apk"
+          artifacts: ${{ env.main_project_module }}/build/outputs/apk/release/*.apk
