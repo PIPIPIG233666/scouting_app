@@ -1,5 +1,9 @@
 name: Android CI
 
+env:
+  # The name of the main module repository
+  main_project_module: app
+
 on:
   push:
     tags:
