@@ -45,7 +45,7 @@ jobs:
           path: ${{ env.main_project_module }}/build/outputs/apk/release/
 
       # Upload to Release
-      - name: Upload APK Release - ${{ env.repository_name }}
-      - uses: ncipollo/release-action@v1
+      - name: Release APK Release - ${{ env.repository_name }}
+        uses: ncipollo/release-action@v1
         with:
           artifacts: ${{ env.main_project_module }}/build/outputs/apk/release/*.apk
