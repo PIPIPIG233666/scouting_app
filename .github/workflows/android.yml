@@ -24,3 +24,11 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+      
+    - name: Build Android App
+      uses: sparkfabrik/android-build-action@v1.4.0
+      with:
+        # Project path
+        project-path: ./
+        # Output path of apk
+        output-path: ./ScoutingApp2023.apk
